@@ -1,4 +1,5 @@
 import Router from 'koa-router'
+import fs from "fs";
 
 const route = new Router({
     prefix: '/players'
@@ -18,10 +19,18 @@ route.get('/:id', ctx => {
     const player = data.players.find(e => e.id == id)
     if (player !== undefined) {
         ctx.body = player
-    } else {
-        ctx.status = 404
     }
 })
-route.del('/:id', ctx => ctx.status = 200)
+
+route.del('/:id', ctx => {
+    const { id } = ctx.params
+    const data = require(JSON_PATH)
+    const index = data.players.findIndex(e => e.id == id)
+    if (index !== -1) {
+        data.players.splice(index, 1)
+        fs.writeFileSync(__dirname + '/' + JSON_PATH)
+        ctx.status = 200
+    }
+})
 
 export default route

@@ -56,12 +56,23 @@ describe('routes : /players', () => {
     })
 
     describe('DELETE /players/:id', () => {
-        it('should return status 200', done => {
+        const { players } = require('../src/headtohead.json')
+        const player =  players[0]
+        it('should return status 200 on delete', done => {
             Chai.request(server)
-                .del('/players/99999')
+                .del('/players/' + player.id)
                 .end((err, res) => {
                     should.not.exist(err)
                     res.status.should.eql(200)
+                    done()
+                })
+        })
+        it('should return status 404 with a delete id', done => {
+            Chai.request(server)
+                .del('/players/' + player.id)
+                .end((err, res) => {
+                    should.not.exist(err)
+                    res.status.should.eql(404)
                     done()
                 })
         })
