@@ -8,7 +8,7 @@ Chai.use(ChaitHttp)
 
 describe('routes : /players', () => {
 
-    describe('GET /', () => {
+    describe('GET /players', () => {
         it('should return status 200', done => {
             Chai.request(server)
                 .get('/players')
@@ -18,9 +18,21 @@ describe('routes : /players', () => {
                     done()
                 })
         })
+        it('should return an array of valid object', done => {
+            Chai.request(server)
+                .get('/players')
+                .end((err, res) => {
+                    res.body.forEach(element => {
+                        element.should.include.keys(
+                            'id', 'firstname', 'lastname', 'shortname', 'sex', 'country', 'picture', 'data'
+                        )
+                    })
+                    done()
+                })
+        })
     })
 
-    describe('GET /:id', () => {
+    describe('GET /players/:id', () => {
         it('should return status 200', done => {
             Chai.request(server)
                 .del('/players/99999')
@@ -32,7 +44,7 @@ describe('routes : /players', () => {
         })
     })
 
-    describe('DELETE /:id', () => {
+    describe('DELETE /players/:id', () => {
         it('should return status 200', done => {
             Chai.request(server)
                 .del('/players/99999')
