@@ -33,9 +33,20 @@ describe('routes : /players', () => {
     })
 
     describe('GET /players/:id', () => {
+        const { players } = require('../src/headtohead.json')
+        const player =  players[0]
+        it('should return status 404 on unknow id', done => {
+            Chai.request(server)
+                .get('/players/99912399')
+                .end((err, res) => {
+                    should.not.exist(err)
+                    res.status.should.eql(404)
+                    done()
+                })
+        })
         it('should return status 200', done => {
             Chai.request(server)
-                .del('/players/99999')
+                .get('/players/' + player.id)
                 .end((err, res) => {
                     should.not.exist(err)
                     res.status.should.eql(200)
