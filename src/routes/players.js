@@ -28,7 +28,7 @@ route.del('/:id', ctx => {
     const index = data.players.findIndex(e => e.id == id)
     if (index !== -1) {
         data.players.splice(index, 1)
-        fs.writeFileSync(__dirname + '/' + JSON_PATH)
+        fs.writeFileSync(__dirname + '/' + JSON_PATH, JSON.stringify(data))
         ctx.status = 200
     }
 })
