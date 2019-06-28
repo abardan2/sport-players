@@ -1,5 +1,6 @@
 import Chai from 'chai'
 import ChaitHttp from 'chai-http'
+import fs from 'fs'
 
 import server from '../src/index'
 
@@ -7,6 +8,15 @@ const should = Chai.should()
 Chai.use(ChaitHttp)
 
 describe('routes : /players', () => {
+
+    // reinit the json data to avoid any surprise of a manual interaction
+    const reinitdata = () => {
+        const data = require('./headtohead.bak.json')
+        fs.writeFileSync(__dirname + '/' + '../src/headtohead.json', JSON.stringify(data))
+    }
+
+    before(reinitdata)
+    after(reinitdata)
 
     describe('GET /players', () => {
         it('should return status 200', done => {
