@@ -17,7 +17,7 @@ A super project !
 
 1. Move in the project directory
 
-2. Install all devv dependencies with npm (check your NODE_ENV is set with 'production')
+2. Install all devv dependencies with npm (check your NODE_ENV is not setted on 'production')
     - Using [npm](https://www.npmjs.com/#getting-started): `npm i`
 
 3. Launch the test
